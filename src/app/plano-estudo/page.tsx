@@ -7,51 +7,50 @@ import { Sidebar } from "@/components/sidebar" // Verifique se o caminho está c
 import { Button } from "@/components/ui/button" // Verifique se o caminho está correto
 
 // Interface para garantir que todos os objetos de dia de estudo tenham o mesmo formato.
-// Isso ajuda a evitar erros e melhora a organização do código.
 interface StudyDay {
   id: string
   label: string
   content: string
   focus: string
-  isIntensive?: boolean // Para dias de estudo com mais de 8 horas
+  isIntensive?: boolean // Para dias de estudo com mais de 6 horas
   isSpecial?: boolean   // Para eventos únicos, como o dia do concurso
   isBirthday?: boolean  // Para o seu dia de descanso de aniversário
   isCompleted?: boolean // Para o dia final da jornada
   isVacation?: boolean  // Para os dias do período de férias
 }
 
-// Array com o novo plano de estudos, recalculado com base nas suas regras.
+// Array com o novo plano de estudos, recalculado com o progresso detalhado dos cursos.
 const studyDays: StudyDay[] = [
     {
         id: "ter3009",
         label: "Ter, 30/09",
-        content: "Curso 01 (2h15m)",
+        content: "Avançar Curso 01 (2h15m)",
         focus: "Iniciando a jornada! Foco total para construir uma base sólida em JavaScript.",
     },
     {
         id: "qua0110",
         label: "Qua, 01/10",
-        content: "Curso 02 (2h15m)",
-        focus: "Avançando no JavaScript, explorando funções, arrays e os fundamentos do ES6+.",
+        content: "Avançar Curso 02 (2h15m)",
+        focus: "Continuando com o básico de JavaScript, explorando funções e arrays.",
     },
     {
         id: "qui0210",
         label: "Qui, 02/10",
-        content: "Dia Intensivo - Feriado (9h)",
-        focus: "Aproveitando o feriado para acelerar! Imersão em ES6+, requisições HTTP e WebStorage.",
+        content: "Concluir Curso 02 (35m) + Curso 03 (1h25m) + Avançar Curso 04 (7h)",
+        focus: "Aproveitando o feriado para acelerar! Finalizando JS, revisão pré-React e uma imersão profunda no Curso 04.",
         isIntensive: true,
     },
     {
         id: "sex0310",
         label: "Sex, 03/10",
-        content: "Curso 03 (1h25m) + Início Curso 04 (50m)",
-        focus: "Revisão pré-React e primeiros passos no framework mais popular do mercado.",
+        content: "Avançar Curso 04 (2h15m)",
+        focus: "Dando continuidade aos estudos de React, focando nos conceitos de componentes e estado.",
     },
     {
         id: "sab0410",
         label: "Sáb, 04/10",
-        content: "Imersão React - Sábado (11h)",
-        focus: "Dia de imersão total! Aprofundando em conceitos básicos, hooks, rotas e Redux.",
+        content: "Concluir C.04 (36m) + C.05 (2h25m) + C.06 (1h20m) + Avançar C.07 (6h39m)",
+        focus: "Dia de maratona! Finalizando vários cursos e mergulhando de cabeça no Next.js.",
         isIntensive: true,
     },
     {
@@ -64,57 +63,57 @@ const studyDays: StudyDay[] = [
     {
         id: "seg0610",
         label: "Seg, 06/10",
-        content: "Curso 04 (2h15m)",
-        focus: "Retomando o React com foco em validações de formulário e preparação para deploy.",
+        content: "Avançar Curso 07 (2h15m)",
+        focus: "Retomando o Next.js com foco em Server Actions, cache e autenticação.",
     },
     {
         id: "ter0710",
         label: "Ter, 07/10",
-        content: "Curso 05 (2h15m)",
-        focus: "Reforçando a base de React com um novo curso para iniciantes. Repetir é aprender.",
+        content: "Concluir Curso 07 (1h30m) + Iniciar Curso 08 (45m)",
+        focus: "Finalizando o curso avançado de Next.js e já começando o primeiro projeto prático.",
     },
     {
         id: "qua0810",
         label: "Qua, 08/10",
-        content: "Curso 06 (1h20m) + Início Curso 07 (55m)",
-        focus: "Transição para o Next.js! Dominando o básico e entendendo a estrutura de páginas.",
+        content: "Avançar Curso 08 (2h15m)",
+        focus: "Mão na massa! Desenvolvendo o projeto de quadro de tarefas para praticar os conceitos.",
     },
     {
         id: "qui0910",
         label: "Qui, 09/10",
-        content: "Curso 07 (2h15m)",
-        focus: "Aprofundando em Next.js: navegação, estilização e estratégias de fetch.",
+        content: "Avançar Curso 08 (2h15m)",
+        focus: "Evoluindo no Next.js com o diretório 'app' e começando o projeto 'dalygames'.",
     },
     {
         id: "sex1010",
         label: "Sex, 10/10",
-        content: "Curso 07 (2h15m)",
-        focus: "Continuando com Next.js, explorando Server Actions, cache e autenticação.",
+        content: "Avançar Curso 08 (2h15m)",
+        focus: "Continuando com os projetos práticos do Curso 08, focando no sistema completo com CMS.",
     },
     {
         id: "sab1110",
         label: "Sáb, 11/10",
-        content: "Imersão Next.js - Sábado (11h)",
-        focus: "Foco total no projeto NextGram e na conclusão dos módulos avançados do Next.js.",
+        content: "Avançar Curso 08 (11h)",
+        focus: "Maratona focada no projeto DevControle. Um sistema completo do zero ao deploy!",
         isIntensive: true,
     },
     {
         id: "dom1210",
         label: "Dom, 12/10",
-        content: "Revisão e Prática - Domingo (6h30m)",
-        focus: "Revisando os conceitos de React e Next.js aprendidos e iniciando o Curso 08.",
+        content: "Concluir C.08 (4h59m) + Iniciar C.09 (1h31m)",
+        focus: "Finalizando o último grande projeto de Next.js e abrindo as portas para o TypeScript.",
     },
     {
         id: "seg1310",
         label: "Seg, 13/10",
-        content: "Curso 08 (2h15m)",
-        focus: "Colocando a mão na massa com o primeiro projeto prático em Next.js.",
+        content: "Avançar Curso 09 (2h15m)",
+        focus: "Aprofundando nos conceitos e tipos do TypeScript para criar um código mais robusto.",
     },
     {
         id: "ter1410",
         label: "Ter, 14/10",
-        content: "Curso 08 (2h15m)",
-        focus: "Avançando no projeto de tarefas e entendendo a evolução para o diretório 'app'.",
+        content: "Avançar Curso 09 (2h15m)",
+        focus: "Continuando a jornada no TypeScript, explorando interfaces e tipos avançados.",
     },
     {
         id: "qua1510",
@@ -126,147 +125,79 @@ const studyDays: StudyDay[] = [
     {
         id: "qui1610",
         label: "Qui, 16/10",
-        content: "Curso 08 (2h15m)",
-        focus: "Retornando aos estudos com o projeto 'dalygames' e o sistema completo com CMS.",
+        content: "Concluir C.09 (2h08m) + Iniciar C.10 (28m)",
+        focus: "Finalizando TypeScript e já começando a aplicá-lo com React. O melhor dos dois mundos!",
     },
     {
         id: "sex1710",
         label: "Sex, 17/10",
-        content: "Curso 08 (2h15m)",
-        focus: "Continuando o desenvolvimento do sistema completo, focando na integração.",
+        content: "Avançar Curso 10 (2h15m)",
+        focus: "Foco total em React com TypeScript. Tipando componentes, props e estados.",
     },
     {
         id: "sab1810",
         label: "Sáb, 18/10",
-        content: "Imersão Projeto Final - Sábado (11h)",
-        focus: "Dia de acelerar no projeto DevControle, um sistema completo do zero ao deploy.",
+        content: "Avançar Curso 10 (11h)",
+        focus: "Maratona de React com TS! Construindo projetos práticos para solidificar o conhecimento.",
         isIntensive: true,
     },
     {
         id: "dom1910",
         label: "Dom, 19/10",
-        content: "Conclusão e Preparação - Domingo (6h30m)",
-        focus: "Finalizando o último projeto de Next.js e se preparando para a fase de TypeScript.",
+        content: "Concluir C.10 (3h43m) + Iniciar C.11 (2h47m)",
+        focus: "Finalizando a integração de TS com React e iniciando os estudos em Tailwind CSS.",
     },
     {
         id: "seg2010",
         label: "Seg, 20/10",
-        content: "Férias Intensivas - TypeScript (11h)",
-        focus: "Começam as férias! Imersão total para dominar o TypeScript do zero ao avançado.",
+        content: "Avançar Curso 11 (11h)",
+        focus: "Férias Intensivas - Modo Turbo! Dominando o Tailwind CSS, do básico ao avançado.",
         isVacation: true,
         isIntensive: true,
     },
     {
         id: "ter2110",
         label: "Ter, 21/10",
-        content: "Férias Intensivas - React com TS (11h)",
-        focus: "Aplicando o poder do TypeScript em projetos React. Foco na tipagem de componentes.",
+        content: "Concluir C.11 (3h1m) + Avançar C.12 (7h59m)",
+        focus: "Finalizando Tailwind e mergulhando de cabeça no grande projeto FullStack SaaS!",
         isVacation: true,
         isIntensive: true,
     },
     {
         id: "qua2210",
         label: "Qua, 22/10",
-        content: "Férias Intensivas - React com TS (11h)",
-        focus: "Avançando no curso prático de React com TypeScript, construindo aplicações robustas.",
+        content: "Avançar Curso 12 (11h)",
+        focus: "Foco total no projeto SaaS com Next.js, TypeScript, Stripe e Prisma.",
         isVacation: true,
         isIntensive: true,
     },
     {
         id: "qui2310",
         label: "Qui, 23/10",
-        content: "Férias Intensivas - Tailwind CSS (11h)",
-        focus: "Dominando o Tailwind CSS! Aprendendo a estilizar de forma rápida e eficiente.",
+        content: "Concluir C.12 (5h28m) + C.13 (1h13m) + Iniciar C.14 (4h19m)",
+        focus: "Reta final! Concluindo o SaaS, aprendendo testes com Jest e já iniciando Roblox Studio.",
         isVacation: true,
         isIntensive: true,
     },
     {
         id: "sex2410",
         label: "Sex, 24/10",
-        content: "Férias Intensivas - Tailwind e Projetos (11h)",
-        focus: "Finalizando o Tailwind e iniciando o grande projeto FullStack SaaS.",
+        content: "Avançar Curso 14 - Roblox (11h)",
+        focus: "Imersão em Roblox Studio! Programação, UI, Animação e DataStore.",
         isVacation: true,
         isIntensive: true,
     },
     {
         id: "sab2510",
-        label: "Sáb, 25/10",
-        content: "Férias Intensivas - Projeto SaaS (11h)",
-        focus: "Imersão no projeto SaaS com Next.js, TypeScript, Stripe e Prisma.",
+        label: "Sab, 25/10",
+        content: "Concluir Curso 14 - Roblox (15h35m)",
+        focus: "Maratona final para concluir o último curso. Foco em criar, publicar e monetizar jogos!",
         isVacation: true,
         isIntensive: true,
     },
     {
         id: "dom2610",
         label: "Dom, 26/10",
-        content: "Férias Intensivas - Projeto SaaS (11h)",
-        focus: "Continuando o desenvolvimento do SaaS. Foco na integração do backend com o frontend.",
-        isVacation: true,
-        isIntensive: true,
-    },
-    // ... Continuação do período de férias ...
-    // Adicionei mais dias aqui para refletir o ritmo intensivo até 09/11
-    {
-        id: "seg2710",
-        label: "Seg, 27/10",
-        content: "Férias Intensivas - Testes e APIs (11h)",
-        focus: "Aprendendo a testar aplicações React com Jest & Testing Library e explorando APIs REST/GraphQL.",
-        isVacation: true,
-        isIntensive: true,
-    },
-    {
-        id: "ter2810",
-        label: "Ter, 28/10",
-        content: "Férias Intensivas - Roblox Studio (11h)",
-        focus: "Hora de diversificar! Primeiros passos no Roblox Studio, entendendo a interface e programação básica.",
-        isVacation: true,
-        isIntensive: true,
-    },
-    {
-        id: "qua2910",
-        label: "Qua, 29/10",
-        content: "Férias Intensivas - Roblox Studio (11h)",
-        focus: "Avançando no Roblox: UI, Animação, Modelagem e salvando dados com DataStore.",
-        isVacation: true,
-        isIntensive: true,
-    },
-    {
-        id: "qui3010",
-        label: "Qui, 30/10",
-        content: "Férias Intensivas - Roblox Studio (11h)",
-        focus: "Criando jogos completos no Roblox, aplicando todo o conhecimento adquirido.",
-        isVacation: true,
-        isIntensive: true,
-    },
-    // Restante dos dias até o fim.
-    {
-        id: "sex3110",
-        label: "Sex, 31/10",
-        content: "Férias Intensivas - Reta Final Roblox (11h)",
-        focus: "Praticando programação e monetização de jogos. Últimos dias de imersão total!",
-        isVacation: true,
-        isIntensive: true,
-    },
-    {
-        id: "sab0111",
-        label: "Sáb, 01/11",
-        content: "Férias Intensivas - Revisão Geral (11h)",
-        focus: "Dia de revisar os pontos mais importantes de toda a jornada e praticar livremente.",
-        isVacation: true,
-        isIntensive: true,
-    },
-    {
-        id: "dom0211",
-        label: "Dom, 02/11",
-        content: "Férias Intensivas - Desafios (11h)",
-        focus: "Resolvendo desafios de código para solidificar o conhecimento em JS, React e Next.",
-        isVacation: true,
-        isIntensive: true,
-    },
-    // Adicionei mais alguns dias para preencher o período de férias até 09/11 e finalizar
-    {
-        id: "seg0311",
-        label: "Seg, 03/11",
         content: "JORNADA CONCLUÍDA!",
         focus: "Parabéns! Você completou todos os cursos com uma dedicação incrível. Missão cumprida!",
         isCompleted: true,
@@ -278,7 +209,6 @@ export default function PlanoEstudoPage() {
   const [activeTab, setActiveTab] = useState("ter3009")
 
   // Função para aplicar estilos diferentes aos botões (abas) com base no tipo de dia.
-  // Isso deixa a interface mais informativa e agradável.
   const getTabStyle = (day: StudyDay) => {
     if (day.isBirthday) return "bg-pink-100 border-pink-300 text-pink-700"
     if (day.isCompleted) return "bg-green-100 border-green-300 text-green-700"
@@ -307,11 +237,10 @@ export default function PlanoEstudoPage() {
       <main className="flex-1 md:ml-64 p-4 sm:p-8">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-3xl font-bold text-slate-800 mb-2">
-            Plano de Estudos - Jornada Full-Stack (v12 - Início 30/09)
+            Plano de Estudos - Jornada Full-Stack (v13 - Detalhado)
           </h1>
           <p className="text-slate-600 mb-8">
-            Seu cronograma recalculado, com o novo início em <strong>30 de Setembro de 2025</strong> e o período de férias
-            intensivo.
+            Seu cronograma recalculado, com o novo início em <strong>30 de Setembro de 2025</strong> e o progresso detalhado dos cursos.
           </p>
 
           {/* Abas com os dias de estudo */}
