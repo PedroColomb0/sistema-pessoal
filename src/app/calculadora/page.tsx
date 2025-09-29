@@ -78,7 +78,7 @@ export default function CalculadoraPage() {
     if (minutesInput && !hours && !minutes && !seconds) {
       minutesInput.focus()
     }
-  }, [entries])
+  }, [entries, hours, minutes, seconds]) // <-- CORRIGIDO
 
   return (
     <div className="flex min-h-screen">

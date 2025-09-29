@@ -4,7 +4,21 @@ import { useState } from "react"
 import { Sidebar } from "@/components/sidebar"
 import { Button } from "@/components/ui/button"
 
-const studyDays = [
+// CORREÇÃO: Interface para tipar os objetos de dia de estudo
+interface StudyDay {
+  id: string
+  label: string
+  content: string
+  focus: string
+  isIntensive?: boolean
+  isSpecial?: boolean
+  isBirthday?: boolean
+  isCompleted?: boolean
+  isVacation?: boolean
+}
+
+// CORREÇÃO: Aplicando o tipo ao array
+const studyDays: StudyDay[] = [
   {
     id: "ter3009",
     label: "Ter, 30/09",
@@ -175,7 +189,8 @@ const studyDays = [
 export default function PlanoEstudoPage() {
   const [activeTab, setActiveTab] = useState("ter3009")
 
-  const getTabStyle = (day: any) => {
+  // CORREÇÃO: usando a interface StudyDay em vez de 'any'
+  const getTabStyle = (day: StudyDay) => {
     if (day.isBirthday) return "bg-pink-100 border-pink-300 text-pink-700"
     if (day.isCompleted) return "bg-green-100 border-green-300 text-green-700"
     if (day.isVacation) return "bg-blue-100 border-blue-300 text-blue-700"
@@ -184,7 +199,8 @@ export default function PlanoEstudoPage() {
     return "bg-slate-100 border-slate-300 text-slate-700"
   }
 
-  const getContentStyle = (day: any) => {
+  // CORREÇÃO: usando a interface StudyDay em vez de 'any'
+  const getContentStyle = (day: StudyDay) => {
     if (day.isBirthday) return "bg-pink-50 border-l-pink-500"
     if (day.isCompleted) return "bg-green-50 border-l-green-500"
     if (day.isVacation) return "bg-blue-50 border-l-blue-500"
