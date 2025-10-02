@@ -6,9 +6,9 @@ import { useState } from "react"
 // 💡 Garanta que os caminhos para 'Sidebar' e 'Button' estão corretos
 import { Sidebar } from "@/components/sidebar" 
 import { Button } from "@/components/ui/button" 
+import { StudyDay, studyDays } from "../data/study-schedule"
 
 // 🎯 Importando a interface e os dados do arquivo dedicado
-import { studyDays, StudyDay } from "@/data/study-schedule" 
 
 
 export default function PlanoEstudoPage() {
