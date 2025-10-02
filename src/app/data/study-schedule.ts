@@ -18,21 +18,24 @@ export const studyDays: StudyDay[] = [
     {
         id: "qui0210",
         label: "Qui, 02/10",
-        content: "Concluir Curso 02 (35m) + Curso 03 (1h25m) + Avançar Curso 04 (7h)",
-        focus: "Aproveitando o feriado para acelerar nos horários das 9h às 12h e 14h às 20h! Finalizando JS, revisão pré-React e uma imersão profunda no Curso 04.",
+        // 🚀 Novo Foco: Cursos 01, 02 e 03 concluídos! (2h15m + 2h50m + 1h25m = 6h30m)
+        content: "Concluir Curso 01 (2h15m) + Concluir Curso 02 (2h50m) + Concluir Curso 03 (1h25m) + Avançar Curso 04 (3h05m)",
+        focus: "Aproveitando o feriado para acelerar nos horários das 9h às 12h e 14h às 20h! **Foco total em finalizar Cursos 01, 02 e 03 (JavaScript)**, e começar a imersão no Curso 04.",
         isIntensive: true,
     },
     {
         id: "sex0310",
         label: "Sex, 03/10",
-        content: "Avançar Curso 04 (4h55m)",
-        focus: "Dando continuidade aos estudos de React, focando nos conceitos de componentes e estado, nos horários das 04:15 às 06:10 e das 20:00 às 23:00.",
+        // Ajuste no Curso 04 (Total 7h36m - 3h05m do dia anterior = 4h31m restantes)
+        content: "Avançar Curso 04 (4h31m)", 
+        focus: "Dando continuidade aos estudos de React (Curso 04), focando nos conceitos de componentes e estado, nos horários das 04:15 às 06:10 e das 20:00 às 23:00.",
     },
     {
         id: "sab0410",
         label: "Sáb, 04/10",
-        content: "Concluir C.04 (36m) + C.05 (2h25m) + C.06 (1h20m) + Avançar C.07 (6h39m)",
-        focus: "Dia de maratona! Finalizando vários cursos e mergulhando de cabeça no Next.js.",
+        // Ajuste no Curso 04 (7h36m - 3h05m - 4h31m = 0m restantes). Curso 04 concluído.
+        content: "Concluir C.04 (0m) + C.05 (2h25m) + C.06 (1h20m) + Avançar C.07 (6h39m)", // Mantém o restante do plano original
+        focus: "Dia de maratona! Finalizando Curso 04, concluindo 05 e 06, e mergulhando de cabeça no Next.js (C.07).",
         isIntensive: true,
     },
     {

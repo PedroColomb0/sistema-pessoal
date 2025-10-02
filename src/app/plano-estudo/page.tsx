@@ -3,19 +3,19 @@
 "use client"
 
 import { useState } from "react"
-// 💡 Importações externas: Garanta que estes caminhos estão corretos
+// 💡 Garanta que os caminhos para 'Sidebar' e 'Button' estão corretos
 import { Sidebar } from "@/components/sidebar" 
 import { Button } from "@/components/ui/button" 
-import { StudyDay, studyDays } from "../data/study-schedule"
 
 // 🎯 Importando a interface e os dados do arquivo dedicado
+import { studyDays, StudyDay } from "@/data/study-schedule" 
 
 
 export default function PlanoEstudoPage() {
     // Definindo o estado inicial para a primeira aba do array de estudos.
     const [activeTab, setActiveTab] = useState(studyDays[0].id) 
 
-    // Função para aplicar estilos diferentes aos botões (abas) com base no tipo de dia.
+    // Função para aplicar estilos de botão com base no tipo de dia.
     const getTabStyle = (day: StudyDay) => {
         if (day.isBirthday) return "bg-pink-100 border-pink-300 text-pink-700"
         if (day.isCompleted) return "bg-green-100 border-green-300 text-green-700"
