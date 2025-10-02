@@ -22,18 +22,6 @@ interface StudyDay {
 // Array com o novo plano de estudos, recalculado com o progresso detalhado dos cursos.
 const studyDays: StudyDay[] = [
     {
-        id: "ter3009",
-        label: "Ter, 30/09",
-        content: "Avançar Curso 01 (2h15m)",
-        focus: "Iniciando a jornada! Foco total para construir uma base sólida em JavaScript.",
-    },
-    {
-        id: "qua0110",
-        label: "Qua, 01/10",
-        content: "Avançar Curso 02 (2h15m)",
-        focus: "Continuando com o básico de JavaScript, explorando funções e arrays.",
-    },
-    {
         id: "qui0210",
         label: "Qui, 02/10",
         content: "Concluir Curso 02 (35m) + Curso 03 (1h25m) + Avançar Curso 04 (7h)",
@@ -206,7 +194,7 @@ const studyDays: StudyDay[] = [
 
 
 export default function PlanoEstudoPage() {
-  const [activeTab, setActiveTab] = useState("ter3009")
+  const [activeTab, setActiveTab] = useState("qui0210")
 
   // Função para aplicar estilos diferentes aos botões (abas) com base no tipo de dia.
   const getTabStyle = (day: StudyDay) => {
@@ -240,7 +228,7 @@ export default function PlanoEstudoPage() {
             Plano de Estudos - Jornada Full-Stack (v13 - Detalhado)
           </h1>
           <p className="text-slate-600 mb-8">
-            Seu cronograma recalculado, com o novo início em <strong>30 de Setembro de 2025</strong> e o progresso detalhado dos cursos.
+            Seu cronograma recalculado, com o novo início em <strong>02 de Outubro de 2025</strong> e o progresso detalhado dos cursos.
           </p>
 
           {/* Abas com os dias de estudo */}
