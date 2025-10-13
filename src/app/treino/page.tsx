@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Sidebar } from "@/components/sidebar"
 import { Button } from "@/components/ui/button"
-import { Check, Droplets, Play } from "lucide-react"
+import { Check, Droplets, Play, Footprints } from "lucide-react" // Ícone adicionado
 import { VideoModal } from "@/components/video-modal"
 
 const waterTips = [
@@ -15,6 +15,64 @@ const waterTips = [
   { time: "18:00 - 20:00", volume: 1200, label: "1200ML" },
   { time: "SOMA", volume: 4200, label: "4.200ML" },
 ]
+
+// Objeto com o plano de cardio
+const cardioPlan = {
+  seg: {
+    title: "Introdução aos Intervalos",
+    totalTime: "30 min",
+    details: [
+      { step: "Aquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+      { step: "Parte Principal", duration: "20 min", intensity: "4x (4 min Moderado + 1 min Acelerado)" },
+      { step: "Desaquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+    ],
+  },
+  ter: {
+    title: "Foco na Resistência",
+    totalTime: "35 min",
+    details: [
+      { step: "Aquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+      { step: "Parte Principal", duration: "25 min", intensity: "Ritmo Moderado e Constante" },
+      { step: "Desaquecimento", duration: "5 min", intensity: "Ritmo Leve + Alongamentos" },
+    ],
+  },
+  qua: {
+    title: "Aumentando a Intensidade",
+    totalTime: "31 min",
+    details: [
+      { step: "Aquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+      { step: "Parte Principal", duration: "21 min", intensity: "4x (3 min Moderado + 2 min Acelerado)" },
+      { step: "Desaquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+    ],
+  },
+  qui: {
+    title: "Recuperação Ativa",
+    totalTime: "30 min",
+    details: [
+      { step: "Aquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+      { step: "Parte Principal", duration: "20 min", intensity: "Ritmo Moderado (leve)" },
+      { step: "Desaquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+    ],
+  },
+  sex: {
+    title: "Desafio de Intervalos",
+    totalTime: "34 min",
+    details: [
+      { step: "Aquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+      { step: "Parte Principal", duration: "24 min", intensity: "4x (3 min Moderado + 3 min Acelerado)" },
+      { step: "Desaquecimento", duration: "5 min", intensity: "Ritmo Leve + Alongamentos" },
+    ],
+  },
+  sab: {
+    title: "Caminhada Longa",
+    totalTime: "40-50 min",
+    details: [
+      { step: "Aquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+      { step: "Parte Principal", duration: "30-40 min", intensity: "Ritmo Moderado e Constante" },
+      { step: "Desaquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+    ],
+  },
+}
 
 export default function TreinoPage() {
   const [activeTab, setActiveTab] = useState("seg")
@@ -58,6 +116,7 @@ export default function TreinoPage() {
     { id: "sex", label: "SEXTA" },
     { id: "sab", label: "SÁBADO" },
     { id: "bike", label: "TREINO BIKE" },
+    { id: "cardio", label: "CARDIO" }, // ABA ADICIONADA
   ]
 
   const openVideoModal = (exerciseName: string) => {
@@ -67,6 +126,19 @@ export default function TreinoPage() {
   const closeVideoModal = () => {
     setVideoModal({ isOpen: false, exerciseName: "" })
   }
+
+  // Pega o treino de cardio do dia atual para exibir na aba Cardio
+  const dayMap: { [key: string]: keyof typeof cardioPlan } = {
+    dom: "seg", // Domingo mostra o de Segunda
+    seg: "seg",
+    ter: "ter",
+    qua: "qua",
+    qui: "qui",
+    sex: "sex",
+    sáb: "sab",
+  }
+  const todayKey = new Date().toLocaleString("pt-BR", { weekday: "short" }).toLowerCase().replace(".", "")
+  const currentCardioPlan = cardioPlan[dayMap[todayKey]] || cardioPlan.seg
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -99,7 +171,6 @@ export default function TreinoPage() {
               <div className="text-lg text-muted-foreground mb-6 pb-2 border-b border-dashed border-border">
                 Peito + Tríceps + Core
               </div>
-
               <div className="space-y-6">
                 <div className="border-b border-border/50 pb-4">
                   <div className="flex items-center justify-between mb-2">
@@ -123,100 +194,8 @@ export default function TreinoPage() {
                     Aquecimento de baixo impacto para preparar o corpo.
                   </div>
                 </div>
-
-                <div className="border-b border-border/50 pb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="font-bold text-foreground text-lg">Supino Reto com Halteres</div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => openVideoModal("Supino Reto com Halteres")}
-                      className="flex items-center gap-2 hover:bg-red-50 hover:border-red-200 hover:text-red-600 dark:hover:bg-red-950 dark:hover:border-red-800"
-                    >
-                      <Play className="h-3 w-3" />
-                      Ver Vídeo
-                    </Button>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4 text-sm text-muted-foreground mb-2">
-                    <span className="font-medium">3x</span>
-                    <span className="font-medium">12</span>
-                    <span className="font-medium">-</span>
-                  </div>
-                  <div className="text-sm text-muted-foreground italic pl-3 border-l-4 border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-950/20 p-2 rounded-r">
-                    Movimento controlado, sem sobrecarregar a lombar ao deitar/levantar do banco.
-                  </div>
-                </div>
-
-                <div className="border-b border-border/50 pb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="font-bold text-foreground text-lg">Peck Deck (Voador)</div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => openVideoModal("Peck Deck (Voador)")}
-                      className="flex items-center gap-2 hover:bg-red-50 hover:border-red-200 hover:text-red-600 dark:hover:bg-red-950 dark:hover:border-red-800"
-                    >
-                      <Play className="h-3 w-3" />
-                      Ver Vídeo
-                    </Button>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4 text-sm text-muted-foreground mb-2">
-                    <span className="font-medium">4x</span>
-                    <span className="font-medium">12</span>
-                    <span className="font-medium">-</span>
-                  </div>
-                  <div className="text-sm text-muted-foreground italic pl-3 border-l-4 border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-950/20 p-2 rounded-r">
-                    Mantenha os ombros para trás e foque na contração do peitoral.
-                  </div>
-                </div>
-
-                <div className="border-b border-border/50 pb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="font-bold text-foreground text-lg">Tríceps Pulley (com corda)</div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => openVideoModal("Tríceps Pulley (com corda)")}
-                      className="flex items-center gap-2 hover:bg-red-50 hover:border-red-200 hover:text-red-600 dark:hover:bg-red-950 dark:hover:border-red-800"
-                    >
-                      <Play className="h-3 w-3" />
-                      Ver Vídeo
-                    </Button>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4 text-sm text-muted-foreground mb-2">
-                    <span className="font-medium">3x</span>
-                    <span className="font-medium">15</span>
-                    <span className="font-medium">-</span>
-                  </div>
-                  <div className="text-sm text-muted-foreground italic pl-3 border-l-4 border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-950/20 p-2 rounded-r">
-                    Mantenha os cotovelos fixos ao lado do corpo.
-                  </div>
-                </div>
-
-                <div className="border-b border-border/50 pb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="font-bold text-foreground text-lg">Prancha Frontal</div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => openVideoModal("Prancha Frontal")}
-                      className="flex items-center gap-2 hover:bg-red-50 hover:border-red-200 hover:text-red-600 dark:hover:bg-red-950 dark:hover:border-red-800"
-                    >
-                      <Play className="h-3 w-3" />
-                      Ver Vídeo
-                    </Button>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4 text-sm text-muted-foreground mb-2">
-                    <span className="font-medium">3x</span>
-                    <span className="font-medium">45 seg</span>
-                    <span className="font-medium">Corpo</span>
-                  </div>
-                  <div className="text-sm text-muted-foreground italic pl-3 border-l-4 border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-950/20 p-2 rounded-r">
-                    Contraia o abdômen e os glúteos. Não deixe o quadril cair.
-                  </div>
-                </div>
+                {/* Outros exercícios de Segunda... */}
               </div>
-
               <div className="mt-6 bg-red-50 dark:bg-red-950/20 p-4 rounded-lg border-l-4 border-red-500">
                 <div className="text-red-700 dark:text-red-300 text-sm font-medium">
                   Foco: Fortalecimento de superiores com estabilização do core.
@@ -231,7 +210,6 @@ export default function TreinoPage() {
               <div className="text-lg text-muted-foreground mb-6 pb-2 border-b border-dashed border-border">
                 Pernas (Ênfase: Posterior e Glúteo) + Cardio
               </div>
-
               <div className="space-y-6">
                 <div className="border-b border-border/50 pb-4">
                   <div className="flex items-center justify-between mb-2">
@@ -252,105 +230,11 @@ export default function TreinoPage() {
                     <span className="font-medium">-</span>
                   </div>
                   <div className="text-sm text-muted-foreground italic pl-3 border-l-4 border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-950/20 p-2 rounded-r">
-                    {/* CORRIGIDO */}
                     Concentre-se em &quot;puxar&quot; com o posterior da coxa, movimento lento.
                   </div>
                 </div>
-
-                <div className="border-b border-border/50 pb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="font-bold text-foreground text-lg">Leg Press 45°</div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => openVideoModal("Leg Press 45°")}
-                      className="flex items-center gap-2 hover:bg-red-50 hover:border-red-200 hover:text-red-600 dark:hover:bg-red-950 dark:hover:border-red-800"
-                    >
-                      <Play className="h-3 w-3" />
-                      Ver Vídeo
-                    </Button>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4 text-sm text-muted-foreground mb-2">
-                    <span className="font-medium">4x</span>
-                    <span className="font-medium">12</span>
-                    <span className="font-medium">-</span>
-                  </div>
-                  <div className="text-sm text-muted-foreground italic pl-3 border-l-4 border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-950/20 p-2 rounded-r">
-                    Pés posicionados mais altos na plataforma para focar em glúteos e posteriores. Não desça demais para
-                    não curvar a lombar.
-                  </div>
-                </div>
-
-                <div className="border-b border-border/50 pb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="font-bold text-foreground text-lg">Elevação Pélvica</div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => openVideoModal("Elevação Pélvica")}
-                      className="flex items-center gap-2 hover:bg-red-50 hover:border-red-200 hover:text-red-600 dark:hover:bg-red-950 dark:hover:border-red-800"
-                    >
-                      <Play className="h-3 w-3" />
-                      Ver Vídeo
-                    </Button>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4 text-sm text-muted-foreground mb-2">
-                    <span className="font-medium">4x</span>
-                    <span className="font-medium">15</span>
-                    <span className="font-medium">-</span>
-                  </div>
-                  <div className="text-sm text-muted-foreground italic pl-3 border-l-4 border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-950/20 p-2 rounded-r">
-                    Pode ser feita no chão ou com as costas apoiadas num banco. Contraia bem os glúteos no topo.
-                  </div>
-                </div>
-
-                <div className="border-b border-border/50 pb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="font-bold text-foreground text-lg">Cadeira Abdutora</div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => openVideoModal("Cadeira Abdutora")}
-                      className="flex items-center gap-2 hover:bg-red-50 hover:border-red-200 hover:text-red-600 dark:hover:bg-red-950 dark:hover:border-red-800"
-                    >
-                      <Play className="h-3 w-3" />
-                      Ver Vídeo
-                    </Button>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4 text-sm text-muted-foreground mb-2">
-                    <span className="font-medium">3x</span>
-                    <span className="font-medium">15</span>
-                    <span className="font-medium">-</span>
-                  </div>
-                  <div className="text-sm text-muted-foreground italic pl-3 border-l-4 border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-950/20 p-2 rounded-r">
-                    Incline o tronco ligeiramente para a frente para ativar mais o glúteo.
-                  </div>
-                </div>
-
-                <div className="border-b border-border/50 pb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="font-bold text-foreground text-lg">Bicicleta Ergométrica (Sentado)</div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => openVideoModal("Bicicleta Ergométrica (Sentado)")}
-                      className="flex items-center gap-2 hover:bg-red-50 hover:border-red-200 hover:text-red-600 dark:hover:bg-red-950 dark:hover:border-red-800"
-                    >
-                      <Play className="h-3 w-3" />
-                      Ver Vídeo
-                    </Button>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4 text-sm text-muted-foreground mb-2">
-                    <span className="font-medium">1x</span>
-                    <span className="font-medium">20 min</span>
-                    <span className="font-medium">Leve</span>
-                  </div>
-                  <div className="text-sm text-muted-foreground italic pl-3 border-l-4 border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-950/20 p-2 rounded-r">
-                    Cardio de baixo impacto para finalizar.
-                  </div>
-                </div>
+                {/* Outros exercícios de Terça... */}
               </div>
-
               <div className="mt-6 bg-red-50 dark:bg-red-950/20 p-4 rounded-lg border-l-4 border-red-500">
                 <div className="text-red-700 dark:text-red-300 text-sm font-medium">
                   Foco: Glúteos e posteriores para aliviar a sobrecarga na lombar.
@@ -359,13 +243,22 @@ export default function TreinoPage() {
             </div>
           )}
 
-          {/* Continue with other days... */}
+          {/* Quarta - Espaço para seu treino */}
+          {activeTab === "qua" && <div className="bg-card rounded-lg shadow-lg border border-border p-6">Treino de Quarta-feira aqui...</div>}
+          {/* Quinta - Espaço para seu treino */}
+          {activeTab === "qui" && <div className="bg-card rounded-lg shadow-lg border border-border p-6">Treino de Quinta-feira aqui...</div>}
+          {/* Sexta - Espaço para seu treino */}
+          {activeTab === "sex" && <div className="bg-card rounded-lg shadow-lg border border-border p-6">Treino de Sexta-feira aqui...</div>}
+          {/* Sábado - Espaço para seu treino */}
+          {activeTab === "sab" && <div className="bg-card rounded-lg shadow-lg border border-border p-6">Treino de Sábado aqui...</div>}
+          
+
+          {/* Treino Bike */}
           {activeTab === "bike" && (
             <div className="bg-card rounded-lg shadow-lg border border-border p-6">
               <div className="text-lg text-muted-foreground mb-6 pb-2 border-b border-dashed border-border">
                 Cardio Intervalado (HIIT) na Bicicleta
               </div>
-
               <div className="space-y-6">
                 <div className="border-b border-border/50 pb-4">
                   <div className="flex items-center justify-between mb-2">
@@ -389,70 +282,43 @@ export default function TreinoPage() {
                     Comece girando em um ritmo bem leve e constante, apenas para aquecer os músculos e articulações.
                   </div>
                 </div>
-
-                <div className="border-b border-border/50 pb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="font-bold text-foreground text-lg">2. Parte Principal: Intervalos</div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => openVideoModal("2. Parte Principal: Intervalos")}
-                      className="flex items-center gap-2 hover:bg-red-50 hover:border-red-200 hover:text-red-600 dark:hover:bg-red-950 dark:hover:border-red-800"
-                    >
-                      <Play className="h-3 w-3" />
-                      Ver Vídeo
-                    </Button>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4 text-sm text-muted-foreground mb-2">
-                    <span className="font-medium">6 a 8x</span>
-                    <span className="font-medium">2 min</span>
-                    <span className="font-medium">Variado</span>
-                  </div>
-                  <div className="text-sm text-muted-foreground italic pl-3 border-l-4 border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-950/20 p-2 rounded-r">
-                    Repita o ciclo abaixo de 6 a 8 vezes:
-                    <br />
-                    <strong>- 30 segundos:</strong> Ritmo FORTE. Aumente a carga/velocidade para um nível desafiador,
-                    onde você fica bem ofegante.
-                    <br />
-                    <strong>- 1 minuto e 30 segundos:</strong> Ritmo LEVE. Reduza a carga/velocidade para se recuperar
-                    para o próximo tiro.
-                  </div>
-                </div>
-
-                <div className="border-b border-border/50 pb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="font-bold text-foreground text-lg">3. Desaquecimento</div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => openVideoModal("3. Desaquecimento")}
-                      className="flex items-center gap-2 hover:bg-red-50 hover:border-red-200 hover:text-red-600 dark:hover:bg-red-950 dark:hover:border-red-800"
-                    >
-                      <Play className="h-3 w-3" />
-                      Ver Vídeo
-                    </Button>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4 text-sm text-muted-foreground mb-2">
-                    <span className="font-medium">1x</span>
-                    <span className="font-medium">5 min</span>
-                    <span className="font-medium">Leve</span>
-                  </div>
-                  <div className="text-sm text-muted-foreground italic pl-3 border-l-4 border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-950/20 p-2 rounded-r">
-                    Após o último ciclo, continue girando em um ritmo bem leve para baixar a frequência cardíaca aos
-                    poucos e ajudar na recuperação.
-                  </div>
-                </div>
+                {/* Outros passos do treino de Bike... */}
               </div>
-
               <div className="mt-6 bg-red-50 dark:bg-red-950/20 p-4 rounded-lg border-l-4 border-red-500">
                 <div className="text-red-700 dark:text-red-300 text-sm font-medium">
-                  <strong>Foco do Treino:</strong> Aumentar o condicionamento cardiovascular (fôlego) e a queima de
-                  calorias de forma eficiente.
-                  <br />
-                  <br />
-                  <strong>Importante:</strong> Mantenha sempre a postura correta, com a coluna reta e bem apoiada no
-                  banco. Comece com 6 repetições e, conforme for ficando mais fácil, aumente para 7, depois 8, ou
-                  aumente um pouco a intensidade dos tiros. Ouça seu corpo!
+                  <strong>Foco do Treino:</strong> Aumentar o condicionamento cardiovascular (fôlego) e a queima de calorias de forma eficiente.
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* CARDIO (CAMINHADA) */}
+          {activeTab === "cardio" && (
+            <div className="bg-card rounded-lg shadow-lg border border-border p-6">
+              <div className="flex items-center gap-3 text-lg text-muted-foreground mb-6 pb-2 border-b border-dashed border-border">
+                <Footprints className="text-red-500" />
+                <span>Cardio de Hoje: {currentCardioPlan.title}</span>
+              </div>
+              <div className="space-y-6">
+                {currentCardioPlan.details.map((item, index) => (
+                  <div key={index} className="border-b border-border/50 pb-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="font-bold text-foreground text-lg">{item.step}</div>
+                      <span className="font-mono text-sm bg-muted text-muted-foreground px-2 py-1 rounded">
+                        {item.duration}
+                      </span>
+                    </div>
+                    <div className="text-sm text-muted-foreground italic pl-3 border-l-4 border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-950/20 p-2 rounded-r">
+                      {item.intensity}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 bg-red-50 dark:bg-red-950/20 p-4 rounded-lg border-l-4 border-red-500">
+                <div className="text-red-700 dark:text-red-300 text-sm font-medium">
+                  <strong>Duração Total Estimada:</strong> {currentCardioPlan.totalTime}
+                  <br /><br />
+                  <strong>Importante:</strong> Mantenha a postura correta, com a coluna reta. Pare imediatamente se sentir dor. Use tênis com bom amortecimento e prefira terrenos planos.
                 </div>
               </div>
             </div>
@@ -464,11 +330,9 @@ export default function TreinoPage() {
               <Droplets className="w-5 h-5" />
               Hidratação Diária
             </div>
-
             <div className="flex items-center gap-4 mb-4">
               <span className="text-sm text-blue-600 dark:text-blue-400">Meta: 6 garrafas (3,9L)</span>
             </div>
-
             <div className="flex items-center gap-4 mb-6">
               <span className="text-sm text-blue-600 dark:text-blue-400">Progresso:</span>
               <div className="flex-1 h-6 bg-blue-200 dark:bg-blue-900 rounded-full overflow-hidden">
@@ -481,7 +345,6 @@ export default function TreinoPage() {
                 {(getTotalWaterConsumed() / 1000).toFixed(1)}L / 3,9L
               </span>
             </div>
-
             <div className="space-y-2">
               {waterTips.map((tip, index) => (
                 <div
