@@ -81,7 +81,7 @@ export default function PlanoEstudoPage() {
 
       const dailyPlan: StudyPlan = {};
       // 2. Define a data de início
-      let currentDate = new Date("2025-10-13T00:00:00-04:00");
+      const currentDate = new Date("2025-10-13T00:00:00-04:00");
       let moduleIndex = 0;
 
       // 3. Loop continua até todos os módulos serem agendados
