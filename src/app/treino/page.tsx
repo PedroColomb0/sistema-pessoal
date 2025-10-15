@@ -3,30 +3,28 @@
 import React, { useState, useEffect } from "react"
 import { Check, Droplets, Play, Footprints, AlertTriangle } from "lucide-react"
 
-// --- COMPONENTES ADICIONADOS PARA CORRIGIR ERROS ---
-
-// Componente Sidebar Simples
+// --- COMPONENTES ---
 const Sidebar = () => (
   <div className="hidden md:flex md:flex-col md:fixed md:inset-y-0 md:w-72 bg-card border-r border-border p-6">
     <h2 className="text-2xl font-bold text-red-500">Meu Treino</h2>
-    <p className="text-sm text-muted-foreground mt-2">Seu plano semanal personalizado.</p>
+    <p className="text-sm text-muted-foreground mt-2">Plano ABC 2x - Foco em Segurança Lombar</p>
     <div className="mt-8 text-sm text-muted-foreground">
-        <p>Domingo: Descanso ativo (alongamento, caminhada leve ou mobilidade).</p>
+      <p><strong>Segunda/Quinta:</strong> Peito, Ombros, Tríceps</p>
+      <p><strong>Terça/Sexta:</strong> Costas, Bíceps, Core</p>
+      <p><strong>Quarta/Sábado:</strong> Pernas e Core</p>
+      <p><strong>Domingo:</strong> Descanso</p>
     </div>
   </div>
 );
 
-// Componente Button Simples (CORRIGIDO)
 const Button = ({ children, onClick, className, variant: _variant, size: _size }: { children: React.ReactNode, onClick?: () => void, className?: string, variant?: string, size?: string }) => {
-    // As props 'variant' e 'size' são renomeadas com '_' para indicar ao ESLint que não estão sendo usadas intencionalmente.
-    return (
-        <button onClick={onClick} className={className}>
-            {children}
-        </button>
-    );
+  return (
+    <button onClick={onClick} className={className}>
+      {children}
+    </button>
+  );
 };
 
-// Componente VideoModal Simples
 const VideoModal = ({ isOpen, onClose, exerciseName }: { isOpen: boolean; onClose: () => void; exerciseName: string }) => {
   if (!isOpen) return null;
 
@@ -41,18 +39,16 @@ const VideoModal = ({ isOpen, onClose, exerciseName }: { isOpen: boolean; onClos
           <p className="text-muted-foreground">Vídeo de demonstração indisponível.</p>
         </div>
         <div className="mt-4 text-right">
-            <Button onClick={onClose} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors">
-                Fechar
-            </Button>
+          <Button onClick={onClose} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors">
+            Fechar
+          </Button>
         </div>
       </div>
     </div>
   );
 };
 
-// --- CÓDIGO ORIGINAL COM AJUSTES ---
-
-// ADIÇÃO: Definição de tipo para um exercício, para evitar o uso de `any`
+// --- ESTRUTURA DE DADOS ATUALIZADA ---
 type ExerciseType = {
   name: string;
   sets: string;
@@ -60,7 +56,111 @@ type ExerciseType = {
   note: string;
 };
 
-// Dicas de hidratação
+// Plano de treino ABC 2x
+const trainingPlan = {
+  seg: {
+    title: "Treino A: Peito, Ombros e Tríceps",
+    focus: "Evitar arco exagerado no supino. Foco em estabilidade.",
+    exercises: [
+      { name: "Supino Deitado com Halteres", sets: "3x", reps: "10-12", note: "Halteres dão mais estabilidade. Desça controladamente." },
+      { name: "Peck Deck (Voador)", sets: "3x", reps: "12-15", note: "Concentre-se em 'espremer' o peitoral." },
+      { name: "Desenvolvimento com Halteres (Sentado)", sets: "3x", reps: "10-12", note: "Costas bem apoiadas no banco a 90°." },
+      { name: "Puxada Alta com Polia para Tríceps", sets: "3x", reps: "12-15", note: "Cotovelos parados ao lado do corpo." },
+    ]
+  },
+  ter: {
+    title: "Treino B: Costas, Bíceps e Core", 
+    focus: "Fortalecer músculos de suporte da coluna. Postura ereta.",
+    exercises: [
+      { name: "Puxada Alta (Puxador Frontal)", sets: "3x", reps: "10-12", note: "Puxe a barra em direção ao peito, tronco estável." },
+      { name: "Puxada Baixa (Remada Sentado)", sets: "3x", reps: "10-12", note: "Coluna reta, sem balançar o tronco." },
+      { name: "Rosca Direta com Halteres (Sentado)", sets: "3x", reps: "12-15", note: "Sentado para evitar compensação lombar." },
+      { name: "Prancha Isométrica", sets: "3x", reps: "30-60s", note: "Corpo reto como uma tábua. Core ativado." },
+      { name: "Prancha Lateral", sets: "3x", reps: "20-40s", note: "20-40 segundos cada lado." },
+    ]
+  },
+  qua: {
+    title: "Treino C: Pernas e Core",
+    focus: "Evitar compressão lombar. Lombar sempre apoiada.",
+    exercises: [
+      { name: "Leg Press 45°", sets: "3x", reps: "10-15", note: "NÃO tire quadril e lombar do banco. Mantenha apoiado." },
+      { name: "Cadeira Extensora", sets: "3x", reps: "12-15", note: "Movimento controlado, isolado para quadríceps." },
+      { name: "Cadeira Flexora", sets: "3x", reps: "12-15", note: "Foco no posterior da coxa." },
+      { name: "Cadeira Abdutora", sets: "3x", reps: "15-20", note: "Glúteos e parte externa das coxas." },
+      { name: "Cadeira Adutora", sets: "3x", reps: "15-20", note: "Parte interna das coxas." },
+      { name: "Prancha Isométrica", sets: "3x", reps: "30-60s", note: "Fortalece core sem flexionar coluna." },
+    ]
+  },
+  qui: {
+    title: "Treino A: Peito, Ombros e Tríceps",
+    focus: "Repetição do treino A com possível aumento progressivo de carga.",
+    exercises: [
+      { name: "Supino Deitado com Halteres", sets: "3x", reps: "10-12", note: "Tente aumentar carga se estiver fácil." },
+      { name: "Peck Deck (Voador)", sets: "3x", reps: "12-15", note: "Mantenha amplitude controlada." },
+      { name: "Desenvolvimento com Halteres (Sentado)", sets: "3x", reps: "10-12", note: "Costas apoiadas, evite arquear." },
+      { name: "Puxada Alta com Polia para Tríceps", sets: "3x", reps: "12-15", note: "Foco na contração do tríceps." },
+    ]
+  },
+  sex: {
+    title: "Treino B: Costas, Bíceps e Core",
+    focus: "Ênfase na execução perfeita. Core sempre ativado.",
+    exercises: [
+      { name: "Puxada Alta (Puxador Frontal)", sets: "3x", reps: "10-12", note: "Progressão de carga se possível." },
+      { name: "Puxada Baixa (Remada Sentado)", sets: "3x", reps: "10-12", note: "Ombro para trás, peito estufado." },
+      { name: "Rosca Direta com Halteres (Sentado)", sets: "3x", reps: "12-15", note: "Evite balançar o corpo." },
+      { name: "Prancha Isométrica", sets: "3x", reps: "30-60s", note: "Aumente tempo conforme evolução." },
+      { name: "Prancha Lateral", sets: "3x", reps: "20-40s", note: "20-40 segundos cada lado." },
+    ]
+  },
+  sab: {
+    title: "Treino C: Pernas e Core",
+    focus: "Último treino da semana. Foco em segurança acima de tudo.",
+    exercises: [
+      { name: "Leg Press 45°", sets: "3x", reps: "10-15", note: "ATENÇÃO: Lombar SEMPRE colada no banco." },
+      { name: "Cadeira Extensora", sets: "3x", reps: "12-15", note: "Controle a descida do peso." },
+      { name: "Cadeira Flexora", sets: "3x", reps: "12-15", note: "Isolamento seguro do posterior." },
+      { name: "Cadeira Abdutora", sets: "3x", reps: "15-20", note: "Contração consciente dos glúteos." },
+      { name: "Cadeira Adutora", sets: "3x", reps: "15-20", note: "Movimento controlado." },
+      { name: "Prancha Isométrica", sets: "3x", reps: "30-60s", note: "Core forte = coluna protegida." },
+    ]
+  },
+}
+
+// Cardio plano (mantido igual)
+const cardioPlan = {
+  seg: { title: "Caminhada Rápida", totalTime: "30 min", details: [
+    { step: "Aquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+    { step: "Parte Principal", duration: "20 min", intensity: "Ritmo Rápido e Constante" },
+    { step: "Desaquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+  ]},
+  ter: { title: "Caminhada Rápida", totalTime: "30 min", details: [
+    { step: "Aquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+    { step: "Parte Principal", duration: "20 min", intensity: "Ritmo Rápido e Constante" },
+    { step: "Desaquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+  ]},
+  qua: { title: "Caminhada Rápida", totalTime: "30 min", details: [
+    { step: "Aquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+    { step: "Parte Principal", duration: "20 min", intensity: "Ritmo Rápido e Constante" },
+    { step: "Desaquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+  ]},
+  qui: { title: "Caminhada Rápida", totalTime: "30 min", details: [
+    { step: "Aquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+    { step: "Parte Principal", duration: "20 min", intensity: "Ritmo Rápido e Constante" },
+    { step: "Desaquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+  ]},
+  sex: { title: "Caminhada Rápida", totalTime: "30 min", details: [
+    { step: "Aquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+    { step: "Parte Principal", duration: "20 min", intensity: "Ritmo Rápido e Constante" },
+    { step: "Desaquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+  ]},
+  sab: { title: "Cardio Longo", totalTime: "45 min", details: [
+    { step: "Aquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+    { step: "Parte Principal", duration: "35 min", intensity: "Caminhada Leve/Moderada" },
+    { step: "Desaquecimento", duration: "5 min", intensity: "Ritmo Leve" },
+  ]},
+}
+
+// Hidratação (mantido igual)
 const waterTips = [
   { time: "04:30 - 06:30", volume: 600, label: "600ML" },
   { time: "07:30 - 11:00", volume: 600, label: "600ML" },
@@ -71,145 +171,12 @@ const waterTips = [
   { time: "SOMA", volume: 4200, label: "4.200ML" },
 ]
 
-// Plano de cardio detalhado
-const cardioPlan = {
-  seg: {
-    title: "Caminhada Rápida",
-    totalTime: "30 min",
-    details: [
-      { step: "Aquecimento", duration: "5 min", intensity: "Ritmo Leve" },
-      { step: "Parte Principal", duration: "20 min", intensity: "Ritmo Rápido e Constante" },
-      { step: "Desaquecimento", duration: "5 min", intensity: "Ritmo Leve" },
-    ],
-  },
-  ter: {
-    title: "Caminhada Rápida",
-    totalTime: "30 min",
-    details: [
-      { step: "Aquecimento", duration: "5 min", intensity: "Ritmo Leve" },
-      { step: "Parte Principal", duration: "20 min", intensity: "Ritmo Rápido e Constante" },
-      { step: "Desaquecimento", duration: "5 min", intensity: "Ritmo Leve" },
-    ],
-  },
-  qua: {
-    title: "Caminhada Rápida",
-    totalTime: "30 min",
-    details: [
-      { step: "Aquecimento", duration: "5 min", intensity: "Ritmo Leve" },
-      { step: "Parte Principal", duration: "20 min", intensity: "Ritmo Rápido e Constante" },
-      { step: "Desaquecimento", duration: "5 min", intensity: "Ritmo Leve" },
-    ],
-  },
-  qui: {
-    title: "Caminhada Rápida",
-    totalTime: "30 min",
-    details: [
-      { step: "Aquecimento", duration: "5 min", intensity: "Ritmo Leve" },
-      { step: "Parte Principal", duration: "20 min", intensity: "Ritmo Rápido e Constante" },
-      { step: "Desaquecimento", duration: "5 min", intensity: "Ritmo Leve" },
-    ],
-  },
-  sex: {
-    title: "Caminhada Rápida",
-    totalTime: "30 min",
-    details: [
-      { step: "Aquecimento", duration: "5 min", intensity: "Ritmo Leve" },
-      { step: "Parte Principal", duration: "20 min", intensity: "Ritmo Rápido e Constante" },
-      { step: "Desaquecimento", duration: "5 min", intensity: "Ritmo Leve" },
-    ],
-  },
-  sab: {
-    title: "Cardio Longo",
-    totalTime: "45 min",
-    details: [
-      { step: "Aquecimento", duration: "5 min", intensity: "Ritmo Leve" },
-      { step: "Parte Principal", duration: "35 min", intensity: "Caminhada Leve/Moderada" },
-      { step: "Desaquecimento", duration: "5 min", intensity: "Ritmo Leve" },
-    ],
-  },
-}
-
-// Estrutura de dados para os treinos
-const trainingPlan = {
-  seg: {
-    title: "Peito + Abdômen",
-    focus: "Evitar arco exagerado no supino para proteger a lombar.",
-    exercises: [
-      { name: "Supino Reto com Barra", sets: "4x", reps: "10", note: "Use carga leve a moderada, focando na contração." },
-      { name: "Supino Inclinado com Halteres", sets: "3x", reps: "12", note: "Controle o movimento, sem pressa." },
-      { name: "Peck Deck (Voador)", sets: "3x", reps: "15", note: "Amplitude controlada para sentir o peitoral." },
-      { name: "Flexão no Solo", sets: "3x", reps: "Máx.", note: "Faça o máximo de repetições com boa forma. Apoie os joelhos se necessário." },
-      { name: "Abdômen Máquina (Deitado)", sets: "3x", reps: "15", note: "Mantenha o abdômen contraído durante todo o exercício." },
-      { name: "Prancha Frontal", sets: "3x", reps: "30s", note: "Coluna reta, core ativado, não deixe o quadril cair." },
-    ]
-  },
-  ter: {
-    title: "Pernas (Ênfase: Quadríceps e Glúteos)",
-    focus: "Foco em exercícios que evitam compressão lombar.",
-    exercises: [
-      { name: "Leg Press 45°", sets: "4x", reps: "12", note: "Mantenha a lombar totalmente apoiada no banco. Não tire o quadril do apoio." },
-      { name: "Cadeira Extensora", sets: "3x", reps: "15", note: "Movimento controlado, principalmente na descida." },
-      { name: "Cadeira Abdutora", sets: "3x", reps: "15", note: "Sente-se com a postura ereta, contraia o glúteo." },
-      { name: "Elevação Pélvica (Glute Bridge)", sets: "3x", reps: "12", note: "Contraia bem os glúteos no topo do movimento." },
-      { name: "Panturrilha no Leg Press", sets: "3x", reps: "20", note: "Alongue e contraia bem a panturrilha." },
-    ]
-  },
-  qua: {
-    title: "Costas + Core",
-    focus: "Foco em postura e estabilização para fortalecer o suporte da coluna.",
-    exercises: [
-      { name: "Puxada Alta (Pegada Aberta)", sets: "4x", reps: "10", note: "Puxe a barra em direção ao peito, mantendo o tronco estável." },
-      { name: "Puxada Baixa (Remada Sentada)", sets: "3x", reps: "12", note: "Mantenha a coluna reta, sem balançar o tronco." },
-      { name: "Remada com Halteres (Apoiado no Banco)", sets: "3x", reps: "10", note: "Apoie uma mão e um joelho no banco para máxima estabilidade." },
-      { name: "Pulldown com Polia (Braços Estendidos)", sets: "3x", reps: "12", note: "Exercício focado no latíssimo, movimento de cima para baixo." },
-      { name: "Prancha Lateral", sets: "3x", reps: "20s (cada lado)", note: "Corpo reto como uma tábua, de lado." },
-      { name: "Crunch na Máquina", sets: "3x", reps: "15", note: "Use o abdômen para mover o peso, não o pescoço ou braços." },
-    ]
-  },
-  qui: {
-    title: "Ombros + Abdômen",
-    focus: "Trabalho com cargas leves para evitar sobrecarga cervical e na lombar.",
-    exercises: [
-      { name: "Desenvolvimento com Halteres (Sentado)", sets: "4x", reps: "12", note: "Mantenha as costas bem apoiadas no banco." },
-      { name: "Elevação Lateral com Halteres", sets: "3x", reps: "15", note: "Não ultrapasse a linha dos ombros, controle a descida." },
-      { name: "Elevação Frontal com Halteres", sets: "3x", reps: "15", note: "Eleve os halteres alternadamente ou juntos, sem balançar o corpo." },
-      { name: "Encolhimento de Ombro (Shrug)", sets: "3x", reps: "15", note: "Apenas eleve os ombros, sem girá-los." },
-      { name: "Prancha Frontal", sets: "3x", reps: "40s", note: "Aumente o tempo conforme for ficando mais fácil." },
-      { name: "Abdominal Infra (Apoiado)", sets: "3x", reps: "12", note: "Eleve as pernas com o abdômen, sem forçar a lombar." },
-    ]
-  },
-  sex: {
-    title: "Pernas (Ênfase: Posterior e Glúteos)",
-    focus: "Uso de máquinas para maior segurança e isolamento muscular.",
-    exercises: [
-      { name: "Cadeira Flexora", sets: "4x", reps: "12", note: "Concentre a força no posterior da coxa." },
-      { name: "Leg Sentado (Máquina Articulada)", sets: "3x", reps: "12", note: "Mantenha a postura e controle o movimento." },
-      { name: "Glúteo na Máquina (Kickback)", sets: "3x", reps: "15", note: "Foque na contração máxima do glúteo." },
-      { name: "Elevação Pélvica com Barra (Hip Thrust)", sets: "3x", reps: "12", note: "Use um apoio para as costas, barra sobre o quadril." },
-      { name: "Panturrilha Sentada", sets: "3x", reps: "20", note: "Amplitude máxima no movimento." },
-    ]
-  },
-  sab: {
-    title: "Core + Cardio Longo",
-    focus: "Fortalecimento completo do abdômen e lombar, seguido de cardio prolongado.",
-    exercises: [
-      { name: "Prancha Frontal", sets: "3x", reps: "40s", note: "Mantenha a contração do core o tempo todo." },
-      { name: "Abdominal na Máquina", sets: "3x", reps: "15", note: "Movimento focado no abdômen." },
-      { name: "Crunch no Solo", sets: "3x", reps: "20", note: "Queixo longe do peito, força no abdômen." },
-      { name: "Abdominal Infra (Pernas Estendidas)", sets: "3x", reps: "12", note: "Desça as pernas lentamente, sem deixar a lombar arquear." },
-      { name: "Alongamento", sets: "1x", reps: "10 min", note: "Foque em alongar lombar, posteriores de coxa e quadríceps." },
-    ]
-  },
-}
-
-// Componente para renderizar um único exercício
+// --- COMPONENTES DE EXERCÍCIO E TREINO ---
 const Exercise = ({ name, sets, reps, note, onVideoClick }: { name: string, sets: string, reps: string, note: string, onVideoClick: (name: string) => void }) => (
   <div className="border-b border-border/50 pb-4">
     <div className="flex items-center justify-between mb-2">
       <div className="font-bold text-foreground text-lg">{name}</div>
       <Button
-        variant="outline"
-        size="sm"
         onClick={() => onVideoClick(name)}
         className="flex items-center gap-2 hover:bg-red-50 hover:border-red-200 hover:text-red-600 dark:hover:bg-red-950 dark:hover:border-red-800 px-3 py-1 border rounded-md text-sm"
       >
@@ -228,7 +195,6 @@ const Exercise = ({ name, sets, reps, note, onVideoClick }: { name: string, sets
   </div>
 );
 
-// Componente para renderizar um dia de treino (CORRIGIDO)
 const TrainingDay = ({ day, onVideoClick }: { day: { title: string, focus: string, exercises: ExerciseType[] }, onVideoClick: (name: string) => void }) => (
   <div className="bg-card rounded-lg shadow-lg border border-border p-6">
     <div className="text-lg text-muted-foreground mb-6 pb-2 border-b border-dashed border-border">
@@ -244,13 +210,14 @@ const TrainingDay = ({ day, onVideoClick }: { day: { title: string, focus: strin
       <div>
         <h4 className="text-yellow-800 dark:text-yellow-200 font-bold">Atenção!</h4>
         <p className="text-yellow-700 dark:text-yellow-300 text-sm font-medium">
-          {day.focus} Sempre mantenha a coluna neutra e o abdômen firme. Se sentir qualquer dor na lombar, pare imediatamente e reduza a carga.
+          {day.focus} QUALQUER DOR NA LOMBAR = PARE IMEDIATAMENTE. Execute com controle total.
         </p>
       </div>
     </div>
   </div>
 );
 
+// --- COMPONENTE PRINCIPAL ---
 export default function TreinoPage() {
   const [activeTab, setActiveTab] = useState("seg")
   const [waterProgress, setWaterProgress] = useState<Record<number, boolean>>({})
@@ -277,7 +244,7 @@ export default function TreinoPage() {
 
   const getTotalWaterConsumed = () => {
     return waterTips.reduce((total, tip, index) => {
-      if (tip.time === "SOMA") return total; // Não somar a linha de SOMA
+      if (tip.time === "SOMA") return total;
       return total + (waterProgress[index] ? tip.volume : 0)
     }, 0)
   }
@@ -315,12 +282,11 @@ export default function TreinoPage() {
       <Sidebar />
       <main className="flex-1 md:ml-72 p-4 md:p-8">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-3xl font-bold text-red-500 mb-8 text-center">Planejamento de Treino Semanal</h1>
+          <h1 className="text-3xl font-bold text-red-500 mb-8 text-center">Plano ABC 2x - Segurança Lombar</h1>
           <div className="flex flex-wrap border-b border-border mb-8 overflow-x-auto bg-card rounded-t-lg">
             {tabs.map((tab) => (
               <Button
                 key={tab.id}
-                variant={activeTab === tab.id ? "default" : "ghost"}
                 className={`rounded-none border-b-2 border-transparent whitespace-nowrap transition-all duration-200 px-4 py-2 text-sm font-medium ${
                   activeTab === tab.id
                     ? "bg-red-500 text-white border-red-500 shadow-sm"
