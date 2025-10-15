@@ -16,10 +16,9 @@ const Sidebar = () => (
   </div>
 );
 
-// Componente Button Simples
-const Button = ({ children, onClick, className, variant, size }: { children: React.ReactNode, onClick?: () => void, className?: string, variant?: string, size?: string }) => {
-    // Esta é uma versão simplificada do botão para evitar erros de compilação.
-    // As props 'variant' e 'size' são aceitas mas não alteram o estilo aqui.
+// Componente Button Simples (CORRIGIDO)
+const Button = ({ children, onClick, className, variant: _variant, size: _size }: { children: React.ReactNode, onClick?: () => void, className?: string, variant?: string, size?: string }) => {
+    // As props 'variant' e 'size' são renomeadas com '_' para indicar ao ESLint que não estão sendo usadas intencionalmente.
     return (
         <button onClick={onClick} className={className}>
             {children}
@@ -53,7 +52,15 @@ const VideoModal = ({ isOpen, onClose, exerciseName }: { isOpen: boolean; onClos
 
 // --- CÓDIGO ORIGINAL COM AJUSTES ---
 
-// Dicas de hidratação (mantido como no original)
+// ADIÇÃO: Definição de tipo para um exercício, para evitar o uso de `any`
+type ExerciseType = {
+  name: string;
+  sets: string;
+  reps: string;
+  note: string;
+};
+
+// Dicas de hidratação
 const waterTips = [
   { time: "04:30 - 06:30", volume: 600, label: "600ML" },
   { time: "07:30 - 11:00", volume: 600, label: "600ML" },
@@ -64,7 +71,7 @@ const waterTips = [
   { time: "SOMA", volume: 4200, label: "4.200ML" },
 ]
 
-// Plano de cardio detalhado (mantido como no original)
+// Plano de cardio detalhado
 const cardioPlan = {
   seg: {
     title: "Caminhada Rápida",
@@ -221,8 +228,8 @@ const Exercise = ({ name, sets, reps, note, onVideoClick }: { name: string, sets
   </div>
 );
 
-// Componente para renderizar um dia de treino
-const TrainingDay = ({ day, onVideoClick }: { day: { title: string, focus: string, exercises: any[] }, onVideoClick: (name: string) => void }) => (
+// Componente para renderizar um dia de treino (CORRIGIDO)
+const TrainingDay = ({ day, onVideoClick }: { day: { title: string, focus: string, exercises: ExerciseType[] }, onVideoClick: (name: string) => void }) => (
   <div className="bg-card rounded-lg shadow-lg border border-border p-6">
     <div className="text-lg text-muted-foreground mb-6 pb-2 border-b border-dashed border-border">
       {day.title}
