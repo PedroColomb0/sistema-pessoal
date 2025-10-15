@@ -17,23 +17,6 @@ export interface Course {
 // --- DADOS DOS CURSOS ---
 export const courses: Course[] = [
   {
-    id: "course01",
-    title: "Curso 01 - JavaScript (Iniciante)",
-    url: "https://www.youtube.com/playlist?list=PLm-VCNNTu3LlXF_xsvl6fzf9KBFb3jHN-",
-    modules: [
-        { id: "js1", name: "Map, Filter & Reduce", time: "11m29s" },
-        { id: "js2", name: "Objects", time: "9m56s" },
-        { id: "js3", name: "Json", time: "3m22s" },
-        { id: "js4", name: "Truthy & False Concept", time: "4m59s" },
-        { id: "js5", name: "Functions & Arrow Functions", time: "4m38s" },
-        { id: "js6", name: "Programacao Orientada a Objetos", time: "9m25s" },
-        { id: "js7", name: "Selecting Dom Elements", time: "7m32s" },
-        { id: "js8", name: "Manipulando Elementos do DOM", time: "6m35s" },
-        { id: "js9", name: "Events", time: "11m14s" },
-        { id: "js10", name: "Creating e Validating a Form", time: "9m06s" },
-    ],
-  },
-  {
     id: "course02",
     title: "Curso 02 - React para Completos Iniciantes [2024]",
     url: "https://www.youtube.com/watch?v=2RWsLmu8yVc&t=263s",
@@ -42,7 +25,7 @@ export const courses: Course[] = [
   {
     id: "course03",
     title: "Curso 03 - TypeScript para Completos Iniciantes",
-    url: "https://www.youtube.com/watch?v=ppDsxbUNtNQ&t=11s&pp=ygUtQ3Vyc28gZGUgVHlwZVNjcmlwdCBwYXJhIENvbXBsZXRvcyBJbmljaWFudGVz",
+    url: "https://www.youtube.com/watch?v=ppDsxbUNtNQ&t=11s&pp=ygUtQ3Vyc28gZGUgVHlwZVNjcmlwdCBwYXJhIENvbXBsZXRvcyBJuaWNpYW50ZXM",
     modules: [{ id: "ts_b1", name: "Aula Completa", time: "1h22min38s" }],
   },
   {
@@ -55,7 +38,7 @@ export const courses: Course[] = [
     id: "course05",
     title: "Curso 05 - Dominando Next JS completo do zero",
     url: "https://www.youtube.com/watch?v=e6FigV2fLC8&t=2756s&pp=ygUnRG9taW5hbmRvIE5leHQgSlMgY29tcGxldG8gZG8gemVybyDwn5Sl",
-    modules: [{ id: "next_b1", name: "Aula Completa", time: "1h20m34s" }], // Atualizado com o total de horas
+    modules: [{ id: "next_b1", name: "Aula Completa", time: "1h20m34s" }],
   },
   {
     id: "course06",
